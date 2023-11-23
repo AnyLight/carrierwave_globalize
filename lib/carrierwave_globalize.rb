@@ -38,12 +38,12 @@ module CarrierwaveGlobalize
     def _translations_mounter(column)
       @_translations_mounter ||= {}
       (@_translations_mounter[Globalize.locale.to_sym] ||= {})[column] ||= \
-        if defined?(CarrierWave::Mounter)
-          # CarrierWave >= 1.0.0
-          ::CarrierWave::Mounter.new(self, column)
+        if defined?(CarrierWave::Mounter.build)
+          # CarrierWave >= 3.0.0
+          ::CarrierWave::Mounter.build(self, column)
         else
-          # CarrierWave < 1.0.0
-          ::CarrierWave::Mount::Mounter.new(self, column)
+          # CarrierWave < 3.0.0
+          ::CarrierWave::Mounter.new(self, column)
         end
     end
   end
